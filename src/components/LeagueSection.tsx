@@ -95,7 +95,7 @@ function MatchRow({ event }: { event: EventSummary }) {
     <Link
       to={`/match/${event.id}`}
       className={`
-        group relative flex items-stretch gap-4 overflow-hidden border-white/5 px-2 my-4 ml-4 last:border-b-0 transition-colors hover:bg-white/2
+        group relative flex items-stretch gap-4 overflow-hidden border-white/5 px-2 my-2 ml-4 last:border-b-0 transition-colors hover:bg-white/2
         ${hasRowIndicator ? rowGradient : ""}
       `}
     >
@@ -114,7 +114,7 @@ function MatchRow({ event }: { event: EventSummary }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-3">
+      <div className="flex flex-1 flex-col justify-center gap-1 p-2">
         <TeamRow
           name={event.home.name}
           badge={event.home.badge}
@@ -167,7 +167,9 @@ export function LeagueSection({
       </div>
       <div>
         {events.map((event) => (
-          <MatchRow key={event.id} event={event} />
+          <div key={event.id} className="border-b border-white/5" >
+            <MatchRow event={event} />
+          </div>
         ))}
       </div>
     </section>
