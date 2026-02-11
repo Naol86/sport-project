@@ -35,10 +35,10 @@ function TeamRow({
   showScores: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="flex items-center justify-between gap-3 py-0.5">
       <div className="flex min-w-0 flex-1 items-center gap-2">
         <div className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#2D2F44]">
-          {badge ? (
+        {badge ? (
             <img src={badge} alt={name} className="h-full w-full object-cover" />
           ) : (
             <div className="h-full w-full bg-[#252740]" />
@@ -78,31 +78,34 @@ function MatchRow({ event }: { event: EventSummary }) {
   const isUpcoming = state === "UPCOMING";
   const showScores = isLive || isFinished;
 
-  const stripColor = isLive
-    ? "before:bg-[#28F2B6]"
+  const hasRowIndicator = true;
+  const barColor = isLive ? "bg-[#28F2B6]" : isFinished ? "bg-[#FF6A5A]" : "bg-white/25";
+  const rowGradient = isLive
+    ? "after:absolute after:left-0 after:top-0 after:bottom-0 after:w-[7.5%] after:content-[''] after:bg-gradient-to-r after:from-[#28F2B6]/5 after:to-transparent after:pointer-events-none"
     : isFinished
-      ? "before:bg-[#FF6A5A]"
-      : "";
+      ? "after:absolute after:left-0 after:top-0 after:bottom-0 after:w-[7.5%] after:content-[''] after:bg-gradient-to-r after:from-[#FF6A5A]/5 after:to-transparent after:pointer-events-none"
+      : "after:absolute after:left-0 after:top-0 after:bottom-0 after:w-[7.5%] after:content-[''] after:bg-gradient-to-r after:from-white/5 after:to-transparent after:pointer-events-none";
   const statusColor = isLive
     ? "text-[#28F2B6]"
     : isFinished
-      ? "text-[#FF6A5A]"
+      ? "text-white"
       : "text-white/80";
 
   return (
     <Link
       to={`/match/${event.id}`}
-      className="group flex items-stretch gap-4 border-b border-white/5 px-4 py-4 last:border-b-0 transition-colors hover:bg-white/2"
+      className={`
+        group relative flex items-stretch gap-4 overflow-hidden border-white/5 px-2 my-4 ml-4 last:border-b-0 transition-colors hover:bg-white/2
+        ${hasRowIndicator ? rowGradient : ""}
+      `}
     >
+      {hasRowIndicator && (
+        <div className={`absolute left-0 top-0 bottom-0 w-0.5 shrink-0 ${barColor}`} />
+      )}
       <div
         className={`
-          relative flex w-14 shrink-0 flex-col items-center justify-center
-          rounded-lg py-2 text-[11px] font-semibold
+          relative flex w-14 shrink-0 flex-col items-center justify-center text-[11px] font-semibold
           ${statusColor}
-          before:absolute before:left-2 before:top-2 before:bottom-2
-          before:w-0.5 before:rounded-full
-          ${stripColor}
-          ${isUpcoming ? "bg-[#1C1E2E]" : "bg-[#1F2132]"}
         `}
       >
         <span>{event.status}</span>
