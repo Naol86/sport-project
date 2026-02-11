@@ -43,10 +43,10 @@ export function MatchDetails() {
             <span>{data.league}</span>
           </Link>
 
-          <div className="flex items-center justify-center gap-8">
-            <div className="flex items-center gap-4">
+          <div className="flex items-center justify-center gap-4 md:gap-8">
+            <div className="flex items-center gap-2 md:gap-4">
               <div className="relative">
-                <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#2D2F44]">
+                <div className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center overflow-hidden rounded-full bg-[#2D2F44]">
                   {data.home.badge ? (
                     <img
                       src={data.home.badge}
@@ -72,10 +72,10 @@ export function MatchDetails() {
               </span>
             </div>
 
-            <div className="flex items-center justify-end gap-4">
+            <div className="flex items-center justify-end gap-2 md:gap-4">
               <span className="text-base font-semibold text-white">{data.away.name}</span>
               <div className="relative">
-                <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#2D2F44]">
+                <div className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center overflow-hidden rounded-full bg-[#2D2F44]">
                   {data.away.badge ? (
                     <img
                       src={data.away.badge}
@@ -91,7 +91,7 @@ export function MatchDetails() {
             </div>
           </div>
 
-          <div className="mt-6 flex gap-1 border-t border-white/5 pt-6">
+          <div className="mt-6 flex gap-1 border-t border-white/5 pt-6 overflow-auto pb-2">
             {TABS.map((tab) => (
               <button
                 key={tab}
