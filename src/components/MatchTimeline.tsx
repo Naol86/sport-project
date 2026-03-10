@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { MatchEvent } from "../types";
 import {
   GoalArrowIcon,
@@ -65,6 +66,7 @@ function MinuteDot({
 }
 
 export function MatchTimeline({ events }: { events: MatchEvent[] }) {
+  const { t } = useTranslation();
   const sorted = [...events].sort(
     (a, b) => parseMinute(b.minute) - parseMinute(a.minute)
   );
@@ -72,7 +74,7 @@ export function MatchTimeline({ events }: { events: MatchEvent[] }) {
   return (
     <div className="overflow-hidden rounded-xl bg-[#1B1C2A] shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
       <div className="border-b border-white/5 px-6 py-4">
-        <h3 className="text-base font-semibold text-white">Events</h3>
+        <h3 className="text-base font-semibold text-white">{t("timeline.events")}</h3>
       </div>
 
       <div className="relative px-6 py-6">
@@ -82,7 +84,7 @@ export function MatchTimeline({ events }: { events: MatchEvent[] }) {
         <div className="space-y-0">
           {/* Fulltime marker */}
           <div className="flex justify-center py-6">
-            <span className="text-sm font-medium text-white/90">Fulltime 2 - 1</span>
+            <span className="text-sm font-medium text-white/90">{t("timeline.fulltime")} 2 - 1</span>
           </div>
 
           {sorted.map((event) => {
@@ -109,7 +111,7 @@ export function MatchTimeline({ events }: { events: MatchEvent[] }) {
                     </div>
                     {event.assist && (
                       <span className={`mt-1 text-xs text-white/50 ${isHome ? "text-right" : "text-left"}`}>
-                        {event.type === "sub" ? `↑ ${event.assist}` : `Assist: ${event.assist}`}
+                        {event.type === "sub" ? `↑ ${event.assist}` : `${t("timeline.assist")}: ${event.assist}`}
                       </span>
                     )}
                     {event.detail && event.type !== "card" && (
@@ -135,12 +137,12 @@ export function MatchTimeline({ events }: { events: MatchEvent[] }) {
 
           {/* Halftime marker */}
           <div className="flex justify-center py-6">
-            <span className="text-sm font-medium text-white/90">Halftime 1 - 0</span>
+            <span className="text-sm font-medium text-white/90">{t("timeline.halftime")} 1 - 0</span>
           </div>
 
           {/* Kick Off marker */}
           <div className="flex justify-center py-6">
-            <span className="text-sm font-medium text-white/90">Kick Off -13:00</span>
+            <span className="text-sm font-medium text-white/90">{t("timeline.kickOff")} -13:00</span>
           </div>
         </div>
       </div>

@@ -114,6 +114,15 @@ export function UKFlagIcon() {
   );
 }
 
+export function SpanishFlagIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="30" fill="#C60B1E" />
+      <rect y="7.5" width="60" height="15" fill="#FFC400" />
+    </svg>
+  );
+}
+
 export function ChevronLeftIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

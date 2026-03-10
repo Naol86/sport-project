@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { FilterTabs } from "../components/FilterTabs";
 import { LeagueSection } from "../components/LeagueSection";
 import { mockEvents } from "../data/mock";
@@ -14,13 +15,14 @@ function groupByLeague(events: EventSummary[]) {
 }
 
 export function Dashboard() {
+  const { t } = useTranslation();
   const data = mockEvents;
   const grouped = useMemo(() => groupByLeague(data), [data]);
 
   return (
     <div className="min-h-screen bg-[#14151E]">
       <div className="mx-auto max-w-5xl px-4 pb-16 pt-8 md:px-6">
-        <h1 className="text-2xl font-bold text-white">Matches</h1>
+        <h1 className="text-2xl font-bold text-white">{t("dashboard.matches")}</h1>
 
         <div className="mt-6 flex items-center justify-between gap-4 rounded-xl bg-[#1B1C2A] px-6 py-4 shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
           <button className="flex items-center justify-center text-white/80 hover:text-white transition-colors">
@@ -28,7 +30,7 @@ export function Dashboard() {
           </button>
           <span className="flex items-center gap-2 text-sm font-medium text-white/90">
             <CalendarDays className="h-5 w-5 text-white/70" />
-            Today
+            {t("dashboard.today")}
           </span>
           <button className="flex items-center justify-center text-white/80 hover:text-white transition-colors">
             <ChevronRight className="h-5 w-5" />

@@ -1,13 +1,21 @@
+import { useTranslation } from "react-i18next";
 import { HeartIcon, LiveIcon } from "../ui/Icons";
 import { Icon } from "../ui/Icon";
 
-const tabs = [
-  { key: "all", label: "All", count: 6, active: true },
-  { key: "live", label: "Live", count: 4, icon: <LiveIcon /> },
-  { key: "fav", label: "Favorites", count: 2, icon: <HeartIcon /> },
-];
-
 export function FilterTabs() {
+  const { t } = useTranslation();
+
+  const tabs = [
+    { key: "all", label: t("filter.all"), count: 6, active: true },
+    { key: "live", label: t("filter.live"), count: 4, icon: <LiveIcon /> },
+    {
+      key: "fav",
+      label: t("filter.favorites"),
+      count: 2,
+      icon: <HeartIcon />,
+    },
+  ];
+
   return (
     <div className="flex gap-3">
       {tabs.map((tab) => (
@@ -15,8 +23,8 @@ export function FilterTabs() {
           key={tab.key}
           className={
             tab.active
-              ? "flex items-center gap-2 rounded-full bg-[#24F0B5] px-4 py-2.5 text-sm font-semibold text-[#0E1D18]"
-              : "flex items-center gap-2 rounded-full bg-[#202334] px-4 py-2.5 text-sm font-medium text-white/90"
+              ? "flex items-center gap-2 rounded-full bg-[#24F0B5] px-4 py-2.5 text-sm font-semibold text-[#0E1D18] cursor-pointer"
+              : "flex items-center gap-2 rounded-full bg-[#202334] px-4 py-2.5 text-sm font-medium text-white/90 cursor-pointer"
           }
         >
           {tab.icon ? (

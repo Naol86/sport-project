@@ -1,22 +1,31 @@
+import { useTranslation } from "react-i18next";
 import {
   GlobeIcon,
   SoccerBallIcon,
   ChevronDownIcon,
   UKFlagIcon,
+  SpanishFlagIcon,
 } from "../ui/Icons";
 import { Icon } from "../ui/Icon";
 
-const navItems = [
-  "Live",
-  "Matches",
-  "Standings",
-  "Teams",
-  "Comparison",
-  "Statistics",
-  "Venues",
-];
+const navKeys = [
+  "live",
+  "matches",
+  "standings",
+  "teams",
+  "comparison",
+  "statistics",
+  "venues",
+] as const;
+
+const flagComponents: Record<string, React.ReactNode> = {
+  en: <UKFlagIcon />,
+  es: <SpanishFlagIcon />,
+};
 
 export function TopBar() {
+  const { t, i18n } = useTranslation();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-linear-to-r from-[#5B10FF] via-[#7413FF] to-[#5B10FF]">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 md:px-6">
@@ -29,17 +38,17 @@ export function TopBar() {
 
           <nav className="hidden lg:flex items-center gap-1">
             <button className="rounded-md px-3 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5">
-              Live
+              {t("nav.live")}
             </button>
             <button className="rounded-md px-3 py-2 text-sm font-medium text-white bg-[#6B4EFF]/80 hover:bg-[#6B4EFF]">
-              Matches
+              {t("nav.matches")}
             </button>
-            {navItems.slice(2).map((item) => (
+            {navKeys.slice(2).map((key) => (
               <button
-                key={item}
+                key={key}
                 className="rounded-md px-3 py-2 text-sm font-medium text-white/70 hover:text-white hover:bg-white/5"
               >
-                {item}
+                {t(`nav.${key}`)}
               </button>
             ))}
           </nav>
@@ -53,16 +62,31 @@ export function TopBar() {
             <SoccerBallIcon />
           </Icon>
           <button className="hidden md:flex items-center gap-2 rounded-lg bg-[#252740]/80 px-3 py-2 text-sm text-white/90 hover:bg-[#252740]">
-            Premier League
+            {t("topBar.premierLeague")}
             <ChevronDownIcon />
           </button>
           <button className="hidden md:flex items-center gap-2 rounded-lg bg-[#252740]/80 px-3 py-2 text-sm text-white/90 hover:bg-[#252740]">
-            2024/25
+            {t("topBar.season")}
             <ChevronDownIcon />
           </button>
-          <Icon className="cursor-pointer">
-            <UKFlagIcon />
-          </Icon>
+
+          {/* Language selector */}
+          <div className="relative flex items-center gap-2 rounded-lg bg-[#252740]/80 px-2.5 py-2">
+            <span className="pointer-events-none shrink-0">
+              {flagComponents[i18n.language] ?? flagComponents.en}
+            </span>
+            <select
+              value={i18n.language}
+              onChange={(e) => i18n.changeLanguage(e.target.value)}
+              className="cursor-pointer appearance-none bg-transparent text-xs font-medium uppercase text-white/90 outline-none pr-4"
+            >
+              <option value="en">EN</option>
+              <option value="es">ES</option>
+            </select>
+            <span className="pointer-events-none absolute right-2">
+              <ChevronDownIcon />
+            </span>
+          </div>
         </div>
       </div>
     </header>

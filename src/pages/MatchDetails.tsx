@@ -1,11 +1,13 @@
 import { Link, useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 import { MatchTimeline } from "../components/MatchTimeline";
 import { getMatchById } from "../data/mock";
 import { BackIcon } from "../ui/Icons";
 
-const TABS = ["Details", "Odds", "Lineups", "Events", "Stats", "Standings"];
+const TAB_KEYS = ["details", "odds", "lineups", "events", "stats", "standings"] as const;
 
 export function MatchDetails() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const data = getMatchById(id);
 
@@ -14,14 +16,14 @@ export function MatchDetails() {
       <div className="min-h-screen bg-[#14151E]">
         <div className="mx-auto max-w-5xl px-4 pb-16 pt-8 md:px-6">
           <div className="rounded-xl bg-[#1F2132] px-6 py-12 text-center">
-            <p className="text-lg text-white/90">Match not found</p>
-            <p className="mt-2 text-sm text-white/50">No match exists with ID "{id}"</p>
+            <p className="text-lg text-white/90">{t("match.notFound")}</p>
+            <p className="mt-2 text-sm text-white/50">{t("match.notFoundDesc", { id })}</p>
             <Link
               to="/"
               className="mt-6 inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors"
             >
               <BackIcon />
-              <span>Back to dashboard</span>
+              <span>{t("match.backToDashboard")}</span>
             </Link>
           </div>
         </div>
@@ -92,16 +94,16 @@ export function MatchDetails() {
           </div>
 
           <div className="mt-6 flex gap-1 border-t border-white/5 pt-6 overflow-auto pb-2">
-            {TABS.map((tab) => (
+            {TAB_KEYS.map((key) => (
               <button
-                key={tab}
+                key={key}
                 className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                  tab === "Events"
+                  key === "events"
                     ? "bg-[#2A283B] text-white"
                     : "text-white/60 hover:text-white hover:bg-white/5"
                 }`}
               >
-                {tab}
+                {t(`match.${key}`)}
               </button>
             ))}
           </div>
@@ -112,9 +114,9 @@ export function MatchDetails() {
             <MatchTimeline events={data.events} />
           ) : (
             <div className="overflow-hidden rounded-xl bg-[#1B1C2A] px-6 py-12 text-center shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
-              <h3 className="text-base font-semibold text-white">Events</h3>
+              <h3 className="text-base font-semibold text-white">{t("match.events")}</h3>
               <p className="mt-4 text-sm text-white/60">
-                No events yet. Match will start at {data.time}.
+                {t("match.noEvents", { time: data.time })}
               </p>
             </div>
           )}
