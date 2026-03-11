@@ -95,7 +95,7 @@ export const mockEvents: EventSummary[] = [
     time: "15:00",
     status: "FT",
     home: { name: "Manchester City", badge: "/assets/manchester-city.png", score: 3 },
-    away: { name: "Burnley", badge: "/assets/burnley.png", score: 0 },
+    away: { name: "Burnley", badge: "/assets/placeholder.png", score: 0 },
   },
   {
     id: "2002",
@@ -124,7 +124,7 @@ export const mockEvents: EventSummary[] = [
     date: "2024-08-01",
     time: "20:00",
     status: "20:00",
-    home: { name: "Southampton", badge: "/assets/southampton.png" },
+    home: { name: "Southampton", badge: "/assets/placeholder.png" },
     away: { name: "Leicester City", badge: "/assets/leicester-city.png" },
   },
   {
