@@ -1,13 +1,7 @@
 import { useTranslation } from "react-i18next";
 import type { MatchEvent } from "../types";
-import {
-  GoalArrowIcon,
-  SubIcon,
-  CornerIcon,
-  YellowCardIcon,
-  RedCardIcon,
-  InjuryIcon,
-} from "../ui/Icons";
+import { EventIcon } from "./EventIcon";
+import { MinuteDot } from "./MinuteDot";
 
 function parseMinute(m: string): number {
   const match = m.match(/(\d+)(?:\+(\d+))?/);
@@ -15,54 +9,6 @@ function parseMinute(m: string): number {
   const base = parseInt(match[1], 10);
   const extra = match[2] ? parseInt(match[2], 10) : 0;
   return base * 100 + extra;
-}
-
-function EventIcon({
-  type,
-  detail,
-}: {
-  type: MatchEvent["type"];
-  detail?: string;
-}) {
-  if (type === "goal") {
-    return <GoalArrowIcon />;
-  }
-  if (type === "sub") {
-    return <SubIcon />;
-  }
-  if (type === "corner") {
-    return <CornerIcon />;
-  }
-  if (type === "card") {
-    return detail === "Sent Off" ? <RedCardIcon /> : <YellowCardIcon />;
-  }
-  if (type === "note") {
-    return <InjuryIcon />;
-  }
-  return <span className="h-2 w-2 rounded-full bg-white/40" />;
-}
-
-function MinuteDot({
-  minute,
-  isGoal,
-  isRedCard,
-}: {
-  minute: string;
-  isGoal?: boolean;
-  isRedCard?: boolean;
-}) {
-  const bg = isRedCard
-    ? "bg-[#E53935]"
-    : isGoal
-      ? "bg-[#22C55E]"
-      : "bg-[#2D2F44]";
-  return (
-    <div
-      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold text-white ${bg}`}
-    >
-      {minute}
-    </div>
-  );
 }
 
 export function MatchTimeline({ events }: { events: MatchEvent[] }) {

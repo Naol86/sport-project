@@ -15,7 +15,7 @@ i18n
     fallbackLng: "en",
     supportedLngs: ["en", "es"],
     interpolation: {
-      escapeValue: false, // React already escapes
+      escapeValue: false,
     },
     detection: {
       order: ["localStorage", "navigator"],
