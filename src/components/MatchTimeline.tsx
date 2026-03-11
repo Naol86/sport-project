@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import type { MatchEvent } from "../types";
+import { isFinishedStatus } from "../lib/match";
 import { EventIcon } from "./EventIcon";
 import { MinuteDot } from "./MinuteDot";
 
@@ -11,11 +12,30 @@ function parseMinute(m: string): number {
   return base * 100 + extra;
 }
 
-export function MatchTimeline({ events }: { events: MatchEvent[] }) {
+function formatScore(value?: number) {
+  return typeof value === "number" ? String(value) : "-";
+}
+
+export function MatchTimeline({
+  events,
+  homeScore,
+  awayScore,
+  status,
+  kickoffTime,
+}: {
+  events: MatchEvent[];
+  homeScore?: number;
+  awayScore?: number;
+  status?: string;
+  kickoffTime?: string;
+}) {
   const { t } = useTranslation();
   const sorted = [...events].sort(
     (a, b) => parseMinute(b.minute) - parseMinute(a.minute)
   );
+  const showFulltime = status ? isFinishedStatus(status) : false;
+  const showHalftime = status ? status === "HT" : false;
+  const scoreLine = `${formatScore(homeScore)} - ${formatScore(awayScore)}`;
 
   return (
     <div className="overflow-hidden rounded-xl bg-[#1B1C2A] shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
@@ -28,10 +48,13 @@ export function MatchTimeline({ events }: { events: MatchEvent[] }) {
         <div className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-px bg-white/10" />
 
         <div className="space-y-0">
-          {/* Fulltime marker */}
-          <div className="flex justify-center py-6">
-            <span className="text-sm font-medium text-white/90">{t("timeline.fulltime")} 2 - 1</span>
-          </div>
+          {showFulltime && (
+            <div className="flex justify-center py-6">
+              <span className="text-sm font-medium text-white/90">
+                {t("timeline.fulltime")} {scoreLine}
+              </span>
+            </div>
+          )}
 
           {sorted.map((event) => {
             const isHome = event.team === "home";
@@ -60,7 +83,7 @@ export function MatchTimeline({ events }: { events: MatchEvent[] }) {
                         {event.type === "sub" ? `${event.assist}` : `${t("timeline.assist")}: ${event.assist}`}
                       </span>
                     )}
-                    {event.detail && event.type !== "card" && (
+                    {event.detail && (
                       <span className={`mt-1 text-xs text-white/50 ${isHome ? "text-right" : "text-left"}`}>
                         {event.detail}
                       </span>
@@ -81,15 +104,21 @@ export function MatchTimeline({ events }: { events: MatchEvent[] }) {
             );
           })}
 
-          {/* Halftime marker */}
-          <div className="flex justify-center py-6">
-            <span className="text-sm font-medium text-white/90">{t("timeline.halftime")} 1 - 0</span>
-          </div>
+          {showHalftime && (
+            <div className="flex justify-center py-6">
+              <span className="text-sm font-medium text-white/90">
+                {t("timeline.halftime")} {scoreLine}
+              </span>
+            </div>
+          )}
 
-          {/* Kick Off marker */}
-          <div className="flex justify-center py-6">
-            <span className="text-sm font-medium text-white/90">{t("timeline.kickOff")} -13:00</span>
-          </div>
+          {kickoffTime && (
+            <div className="flex justify-center py-6">
+              <span className="text-sm font-medium text-white/90">
+                {t("timeline.kickOff")} {kickoffTime}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

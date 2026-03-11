@@ -3,12 +3,13 @@ import { ChevronRightIconSmall, MoreIcon } from "../ui/Icons";
 import { Icon } from "../ui/Icon";
 import type { EventSummary } from "../types";
 import { TeamRow } from "./TeamRow";
+import { isFinishedStatus, isLiveStatus } from "../lib/match";
 
 type MatchState = "LIVE" | "FT" | "UPCOMING";
 
 export function getMatchState(status: string): MatchState {
-  if (status === "FT") return "FT";
-  if (status === "HT" || status.includes("'")) return "LIVE";
+  if (isFinishedStatus(status)) return "FT";
+  if (isLiveStatus(status)) return "LIVE";
   return "UPCOMING";
 }
 
@@ -36,7 +37,7 @@ export function MatchRow({ event }: { event: EventSummary }) {
     <Link
       to={`/match/${event.id}`}
       className={`
-        group relative flex items-stretch gap-4 overflow-hidden border-white/5 px-2 my-2 ml-4 last:border-b-0 transition-colors hover:bg-white/2
+        group relative flex items-stretch gap-4 overflow-hidden px-2 my-2 ml-4 last:border-b-0 transition-colors hover:bg-white/5
         ${hasRowIndicator ? rowGradient : ""}
       `}
     >

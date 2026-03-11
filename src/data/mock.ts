@@ -1,4 +1,5 @@
 import type { EventSummary, MatchDetail, MatchEvent, TeamLineup } from "../types";
+import { isFinishedStatus, isLiveStatus } from "../lib/match";
 
 /** Generic mock events for live/finished matches - varies by match */
 const mockEventsByMatch: Record<string, MatchEvent[]> = {
@@ -39,7 +40,7 @@ const mockEventsByMatch: Record<string, MatchEvent[]> = {
 };
 
 function isLiveOrFinished(status: string): boolean {
-  return status === "FT" || status === "Finished" || status === "HT" || /^\d+['+]?$/.test(status);
+  return isFinishedStatus(status) || isLiveStatus(status);
 }
 
 export const mockEvents: EventSummary[] = [

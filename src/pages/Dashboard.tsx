@@ -5,14 +5,11 @@ import { LeagueSection } from "../components/LeagueSection";
 import { Calendar } from "../components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../components/ui/popover";
 import { mockEvents } from "../data/mock";
+import { isLiveStatus } from "../lib/match";
 import type { EventSummary } from "../types";
 import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
 
 type FilterType = "all" | "live" | "fav";
-
-function isLive(status: string) {
-  return status === "HT" || /^\d+['+]?$/.test(status);
-}
 
 function groupByLeague(events: EventSummary[]) {
   return events.reduce<Record<string, EventSummary[]>>((acc, event) => {
@@ -43,14 +40,14 @@ export function Dashboard() {
   const counts = useMemo(() => {
     return {
       all: mockEvents.length,
-      live: mockEvents.filter((e) => isLive(e.status)).length,
+      live: mockEvents.filter((e) => isLiveStatus(e.status)).length,
       fav: mockEvents.filter((e) => e.favorite).length,
     };
   }, []);
 
   const filteredEvents = useMemo(() => {
     if (activeFilter === "live") {
-      return mockEvents.filter((e) => isLive(e.status));
+      return mockEvents.filter((e) => isLiveStatus(e.status));
     }
     if (activeFilter === "fav") {
       return mockEvents.filter((e) => e.favorite);
@@ -67,18 +64,21 @@ export function Dashboard() {
 
         <div className="mt-6 flex items-center justify-between gap-4 rounded-xl bg-[#1B1C2A] px-6 py-4 shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
           <button
+            type="button"
             onClick={handlePrevDay}
+            aria-label={t("dashboard.prevDay", "Previous day")}
             className="flex items-center justify-center text-white/80 hover:text-white transition-colors cursor-pointer"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           
           <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-            <PopoverTrigger>
-              <button className="flex items-center gap-2 text-sm font-medium text-white/90 cursor-pointer hover:text-white transition-colors">
-                <CalendarDays className="h-5 w-5 text-white/70" />
-                <span>{dateDisplay}</span>
-              </button>
+            <PopoverTrigger
+              type="button"
+              className="flex items-center gap-2 text-sm font-medium text-white/90 cursor-pointer hover:text-white transition-colors"
+            >
+              <CalendarDays className="h-5 w-5 text-white/70" />
+              <span>{dateDisplay}</span>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0 border-white/10 bg-[#1B1C2A] text-white shadow-2xl z-[60]" align="center">
               <Calendar
@@ -91,13 +91,15 @@ export function Dashboard() {
                     setIsCalendarOpen(false);
                   }
                 }}
-                className="bg-red-700 text-white rounded-xl"
+                className="rounded-xl bg-[#1B1C2A] text-white p-2"
               />
             </PopoverContent>
           </Popover>
 
           <button
+            type="button"
             onClick={handleNextDay}
+            aria-label={t("dashboard.nextDay", "Next day")}
             className="flex items-center justify-center text-white/80 hover:text-white transition-colors cursor-pointer"
           >
             <ChevronRight className="h-5 w-5" />

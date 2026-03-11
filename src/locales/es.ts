@@ -12,6 +12,7 @@ export default {
   topBar: {
     premierLeague: "Premier League",
     season: "2024/25",
+    quickActions: "Acciones rápidas",
   },
   // Filter tabs
   filter: {
@@ -23,6 +24,8 @@ export default {
   dashboard: {
     matches: "Partidos",
     today: "Hoy",
+    prevDay: "Día anterior",
+    nextDay: "Día siguiente",
   },
   // Match details
   match: {

@@ -42,7 +42,13 @@ export function MatchDetails() {
     switch (activeTab) {
       case "events":
         return hasEvents ? (
-          <MatchTimeline events={data.events} />
+          <MatchTimeline
+            events={data.events}
+            homeScore={data.home.score}
+            awayScore={data.away.score}
+            status={data.status}
+            kickoffTime={data.time}
+          />
         ) : (
           <div className="overflow-hidden rounded-xl bg-[#1B1C2A] px-6 py-12 text-center shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
             <h3 className="text-base font-semibold text-white">{t("match.events")}</h3>
@@ -83,6 +89,7 @@ export function MatchDetails() {
 
           <div className="flex items-center justify-center gap-4 md:gap-8">
             <div className="flex items-center gap-2 md:gap-4">
+              <span className="text-base font-semibold text-white">{data.home.name}</span>
               <div className="relative">
                 <div className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center overflow-hidden rounded-full bg-[#2D2F44]">
                   {data.home.badge ? (
@@ -97,7 +104,6 @@ export function MatchDetails() {
                   {data.home.score ?? 0}
                 </span>
               </div>
-              <span className="text-base font-semibold text-white">{data.home.name}</span>
             </div>
 
             <div className="flex flex-col items-center gap-2">
@@ -111,7 +117,6 @@ export function MatchDetails() {
             </div>
 
             <div className="flex items-center justify-end gap-2 md:gap-4">
-              <span className="text-base font-semibold text-white">{data.away.name}</span>
               <div className="relative">
                 <div className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center overflow-hidden rounded-full bg-[#2D2F44]">
                   {data.away.badge ? (
@@ -126,6 +131,7 @@ export function MatchDetails() {
                   {data.away.score ?? 0}
                 </span>
               </div>
+              <span className="text-base font-semibold text-white">{data.away.name}</span>
             </div>
           </div>
 
@@ -133,6 +139,7 @@ export function MatchDetails() {
             {TAB_KEYS.map((key) => (
               <button
                 key={key}
+                type="button"
                 onClick={() => setActiveTab(key)}
                 className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
                   key === activeTab

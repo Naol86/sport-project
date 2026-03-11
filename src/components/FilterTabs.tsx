@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { HeartIcon, LiveIcon } from "../ui/Icons";
 import { Icon } from "../ui/Icon";
@@ -13,7 +14,7 @@ interface FilterTabsProps {
 export function FilterTabs({ activeFilter, onFilterChange, counts }: FilterTabsProps) {
   const { t } = useTranslation();
 
-  const tabs: { key: FilterType; label: string; icon?: React.ReactNode }[] = [
+  const tabs: { key: FilterType; label: string; icon?: ReactNode }[] = [
     { key: "all", label: t("filter.all") },
     { key: "live", label: t("filter.live"), icon: <LiveIcon /> },
     { key: "fav", label: t("filter.favorites"), icon: <HeartIcon /> },
@@ -26,6 +27,7 @@ export function FilterTabs({ activeFilter, onFilterChange, counts }: FilterTabsP
         return (
           <button
             key={tab.key}
+            type="button"
             onClick={() => onFilterChange(tab.key)}
             className={
               isActive
