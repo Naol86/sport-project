@@ -166,10 +166,7 @@ export function GoalIcon() {
 
 export function SubIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="10" fill="#22C55E" />
-      <path d="M12 6v4M12 14v4M8 10h8" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img src="/assets/icons/subIcon.png" className="h-3 w-3" alt="sub" />
   );
 }
 

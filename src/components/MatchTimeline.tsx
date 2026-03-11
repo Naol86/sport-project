@@ -57,7 +57,7 @@ export function MatchTimeline({ events }: { events: MatchEvent[] }) {
                     </div>
                     {event.assist && (
                       <span className={`mt-1 text-xs text-white/50 ${isHome ? "text-right" : "text-left"}`}>
-                        {event.type === "sub" ? `↑ ${event.assist}` : `${t("timeline.assist")}: ${event.assist}`}
+                        {event.type === "sub" ? `${event.assist}` : `${t("timeline.assist")}: ${event.assist}`}
                       </span>
                     )}
                     {event.detail && event.type !== "card" && (
